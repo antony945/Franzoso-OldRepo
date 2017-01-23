@@ -6,10 +6,6 @@ int main() {
 
 	Inizializza(); //inizializza sdl
 
-	Croce = CaricaTexture("");//carica texture croce
-	Cerchio = CaricaTexture("");//carica texture cerchio
-	Tabella = CaricaTexture("");//carica texture tabella
-
 	MessaggioIniziale(); //da il benvenuto
 	DisegnaTabella(); //render della casella
         SDL_RenderPresent(Renderer);

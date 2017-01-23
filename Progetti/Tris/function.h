@@ -10,7 +10,7 @@ SDL_Texture* CaricaTexture(std::string path); //caricamento di tutte le texture
 
 					  /*Piegari:
 					  disegno della tabella principale*/
-void DisegnaTabella(int width, int height); //Disegno tabella attraverso viewport
+void DisegnaTabella(); //Disegno tabella attraverso viewport
 
 					   /*Dittadi:
 					   display di un messaggio di benvenuto della durata di 5 secondi
@@ -24,15 +24,15 @@ int GestisciEvento(); //deve dare in output l'index della casella ; ritorna -1 s
 
 					  /*Polesel:
 					  funzione per il controllo della disponibilità della casella*/
-bool ControlloCasella(int index); //Restituisce vero se la casella è libera e falso se è già occupata
+bool ControlloCasella(); //Restituisce vero se la casella è libera e falso se è già occupata
 
 						 /*Mangiacapre:
 						viewport che renderizza la texture del cerchio trasformando l'index in coordinate x e y*/
-void DisegnaCerchio(int index, int height, int width); //Disegna il simbolo 
+void DisegnaCerchio(); //Disegna il simbolo 
 
 					   /*Franzoso:
 					   viewport che renderizza la texture del croce trasformando l'index in coordinate x e y */
-void DisegnaCroce(int index, int height, int width);
+void DisegnaCroce();
 
 						/*Vio:
 						funzione che restituisce vero in caso di vittoria*/
@@ -51,4 +51,4 @@ void MessaggioFinale(); //DIsplay del messaggio finale in base al risultato
 						gestione della chiusura di SDL*/
 void Chiusura(); //Termina SDL, distrugge finestre, texture e superfici e annulla i puntatori.
 
-void AggiornaCasella(int index, bool turno);
+void AggiornaCasella();

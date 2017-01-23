@@ -1,70 +1,13 @@
 #Progetto Tris
 
-
-
-
-
-
-
-*CONTROLLARE FILE FUNCTION.H , FILE AGGIORNATO*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Come da accordi, questa è una suddivsione generica, non completa e abbozzata del progetto tris.
 Di seguito una sommaria suddivisione delle funzioni, le assegnazioni arriveranno non appena avremo una struttura completa.
 **Questa volta non è consigliato, bensì _obbligatorio_, esprimere la propria opinione e le proprie proposte di cambiamenti per la struttura**
 
 ``` c++
-#define altezza 302
-#define larghezza 302
 
-SDL_Rect *Posizione[9] = new SDL_Rect;
-
-
-main(int argc, char* args[])
-{
-	/*Polesel - Piegari*/
+/*Polesel - Piegari*/
 class cTexture{} //classe per la gesione delle informazioni di una texture
-
-    Inizializza(); 
-    CaricaTexture();
-    DisegnaTabella(); 
-    MessaggioIniziale();
-    
-
-    bool turno;
-    while(!quit)
-    {
-
-        GestisciEvento();
-        ControlloPosizione();
-        ControlloCasella();
-        DisegnaSimbolo(index, turno)
-        quit = ControlloVittoria();
-        quit = ControlloPareggio();
-        turno = !turno;
-
-    }
-    MessaggioFinale();
-    Chiusura();
-}
 
 /*Piegari:
 funzione di inizializzazione delle variabili e dei puntatori*/
