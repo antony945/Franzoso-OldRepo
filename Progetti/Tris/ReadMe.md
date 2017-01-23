@@ -1,5 +1,32 @@
 #Progetto Tris
 
+
+
+
+
+
+
+*CONTROLLARE FILE FUNCTION.H , FILE AGGIORNATO*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Come da accordi, questa è una suddivsione generica, non completa e abbozzata del progetto tris.
 Di seguito una sommaria suddivisione delle funzioni, le assegnazioni arriveranno non appena avremo una struttura completa.
 **Questa volta non è consigliato, bensì _obbligatorio_, esprimere la propria opinione e le proprie proposte di cambiamenti per la struttura**
