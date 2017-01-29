@@ -216,7 +216,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Load sprite sheet texture
-	if( !gSpriteSheetTexture.loadFromFile( "11_clip_rendering_and_sprite_sheets/dots.png" ) )
+	if( !gSpriteSheetTexture.loadFromFile( "dots.png" ) )
 	{
 		printf( "Failed to load sprite sheet texture!\n" );
 		success = false;
@@ -234,7 +234,7 @@ bool loadMedia()
 		gSpriteClips[ 1 ].y =   0;
 		gSpriteClips[ 1 ].w = 100;
 		gSpriteClips[ 1 ].h = 100;
-		
+
 		//Set bottom left sprite
 		gSpriteClips[ 2 ].x =   0;
 		gSpriteClips[ 2 ].y = 100;
@@ -256,7 +256,7 @@ void close()
 	//Free loaded images
 	gSpriteSheetTexture.free();
 
-	//Destroy window	
+	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
@@ -282,7 +282,7 @@ int main( int argc, char* args[] )
 			printf( "Failed to load media!\n" );
 		}
 		else
-		{	
+		{
 			//Main loop flag
 			bool quit = false;
 

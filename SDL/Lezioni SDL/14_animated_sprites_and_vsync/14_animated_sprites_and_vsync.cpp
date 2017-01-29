@@ -35,7 +35,7 @@ class LTexture
 
 		//Set alpha modulation
 		void setAlpha( Uint8 alpha );
-		
+
 		//Renders texture at given point
 		void render( int x, int y, SDL_Rect* clip = NULL );
 
@@ -151,7 +151,7 @@ void LTexture::setBlendMode( SDL_BlendMode blending )
 	//Set blending function
 	SDL_SetTextureBlendMode( mTexture, blending );
 }
-		
+
 void LTexture::setAlpha( Uint8 alpha )
 {
 	//Modulate texture alpha
@@ -244,7 +244,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Load sprite sheet texture
-	if( !gSpriteSheetTexture.loadFromFile( "14_animated_sprites_and_vsync/foo.png" ) )
+	if( !gSpriteSheetTexture.loadFromFile( "foo.png" ) )
 	{
 		printf( "Failed to load walking animation texture!\n" );
 		success = false;
@@ -261,7 +261,7 @@ bool loadMedia()
 		gSpriteClips[ 1 ].y =   0;
 		gSpriteClips[ 1 ].w =  64;
 		gSpriteClips[ 1 ].h = 205;
-		
+
 		gSpriteClips[ 2 ].x = 128;
 		gSpriteClips[ 2 ].y =   0;
 		gSpriteClips[ 2 ].w =  64;
@@ -272,7 +272,7 @@ bool loadMedia()
 		gSpriteClips[ 3 ].w =  64;
 		gSpriteClips[ 3 ].h = 205;
 	}
-	
+
 	return success;
 }
 
@@ -281,7 +281,7 @@ void close()
 	//Free loaded images
 	gSpriteSheetTexture.free();
 
-	//Destroy window	
+	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
@@ -307,7 +307,7 @@ int main( int argc, char* args[] )
 			printf( "Failed to load media!\n" );
 		}
 		else
-		{	
+		{
 			//Main loop flag
 			bool quit = false;
 
