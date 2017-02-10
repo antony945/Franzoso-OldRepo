@@ -116,44 +116,47 @@ int main(int argc, char* args[]){
                 SDL_RenderClear(myRenderer);
 
                 SDL_SetRenderDrawColor(myRenderer, 0x00, 0x00, 0x00, 0x00 );
-                SDL_RenderDrawLine(myRenderer, 100, 0, 100, HEIGHT );
-                SDL_RenderDrawLine(myRenderer, 200, 0, 200, HEIGHT );
-                SDL_RenderDrawLine(myRenderer, 0, 200, WIDTH, 200 );
-                SDL_RenderDrawLine(myRenderer, 0, 100, WIDTH, 100 );
+                SDL_RenderDrawLine(myRenderer, 101, 0, 101, HEIGHT );
+                SDL_RenderDrawLine(myRenderer, 202, 0, 202, HEIGHT );
+                SDL_RenderDrawLine(myRenderer, 0, 202, WIDTH, 202 );
+                SDL_RenderDrawLine(myRenderer, 0, 101, WIDTH, 101 );
 
                 //Lato del quadrato nel quale viene inscritto il GR della croce
 
-                int index = 6;
-                int x1_a = 46;
-                int x1_b = 56;
-                int y1 = 46;
+                int index = 4;
+                int x1_a = 20;
+                int x1_b = 70;
+                int y1 = 25;
 
-                //Calcolo posizione partenza linee in base al valore dell'index
-                if(index < 4){
-                    x1_a+=((index-1)*100);
-                    x1_b+=((index-1)*100);
+                //Calcolo posizione partenza linee
+                if(index < 3){
+                    x1_a+=((index)*101);
+                    x1_b+=((index)*101);
                 }else{
-                    if(index < 7){
-                        x1_a+=(index-4)*100;
-                        x1_b+=(index-4)*100;
+                    if(index < 6){
+                        x1_a+=(index-3)*101;
+                        x1_b+=(index-3)*101;
                         y1+=101;
                     }else{
-                        x1_a+=(index-7)*100;
-                        x1_b+=(index-7)*100;
-                        y1+=2*100;
+                        x1_a+=(index-6)*101;
+                        x1_b+=(index-6)*101;
+                        y1+=2*101;
                     }
                 }
 
-                int x2_a = x1_a+10;
-                int x2_b = x2_a-10;
-                int y2 = y1+10;
+                //Calcolo posizione finale linee
+                int x2_a = x1_a+50;
+                int x2_b = x2_a-50;
+                int y2 = y1+50;
 
-                //Inizializza colore nero
+                //Setta il colore nero sul render
                 SDL_SetRenderDrawColor(myRenderer, 0x00, 0x00, 0x00, 0x00);
 
-                //Disegno due linee oblique
-                SDL_RenderDrawLine(myRenderer, x1_a, y1, x2_a, y2); //LINEA A
-                SDL_RenderDrawLine(myRenderer, x1_b, y1, x2_b, y2); //LINEA B
+                //Disegno della croce (due linee oblique)
+                for(int i = 0; i<=10; i++){
+                    SDL_RenderDrawLine(myRenderer, x1_a+i, y1, x2_a+i, y2); //LINEA A
+                    SDL_RenderDrawLine(myRenderer, x1_b+i, y1, x2_b+i, y2); //LINEA B
+                }
 
                 //Update screen
                 SDL_RenderPresent(myRenderer);
