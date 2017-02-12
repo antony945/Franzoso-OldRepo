@@ -212,7 +212,7 @@ bool loadMedia()
 		printf( "Failed to load Foo' texture image!\n" );
 		success = false;
 	}
-	
+
 	//Load background texture
 	if( !gBackgroundTexture.loadFromFile( "10_color_keying/background.png" ) )
 	{
@@ -229,7 +229,7 @@ void close()
 	gFooTexture.free();
 	gBackgroundTexture.free();
 
-	//Destroy window	
+	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
@@ -255,7 +255,7 @@ int main( int argc, char* args[] )
 			printf( "Failed to load media!\n" );
 		}
 		else
-		{	
+		{
 			//Main loop flag
 			bool quit = false;
 
