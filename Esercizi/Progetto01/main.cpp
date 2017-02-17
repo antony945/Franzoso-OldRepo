@@ -221,15 +221,16 @@ int main(int argc, char* argv[])
                 }
 
                 SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_RenderClear(gRenderer);
 
-                SDL_Rect* currentClip = &gSpacemanRect[frame/4];
-                gSpacemanTexture.render((LUNGHEZZA - currentClip->w)/2, (ALTEZZA - currentClip->h)/2, currentClip);
+                SDL_Rect* currentClip = &gSpacemanRect[frame/8];
+                gSpacemanTexture.render(LUNGHEZZA/2, ALTEZZA/2, currentClip);
 
                 SDL_RenderPresent(gRenderer);
 
                 frame++;
 
-                if(frame/4 >= TOTAL_CLIP)
+                if(frame/8 >= TOTAL_CLIP)
                 {
                     frame = 0;
                 }
@@ -373,7 +374,7 @@ bool inizializza(){
 					success = false;
 				}
 
-				if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+				if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 24000) < 0)
 				{
 					cout << "Problemo.";
 					success = false;
