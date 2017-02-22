@@ -7,52 +7,28 @@ and may not be redistributed without written permission.*/
 #include <SDL_ttf.h>
 #include <stdio.h>
 #include <string>
-#include <cmath>
 #include <iostream>
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-enum stringDimensions{
-    LENGTH_STRING,
-    HEIGHT_STRING,
-    TOTAL_DIMENSIONS
-
-};
-
 //Texture wrapper class
-class LTexture
+class Text
 {
 	public:
 		//Initializes variables
-		LTexture();
+		Text();
 
 		//Deallocates memory
-		~LTexture();
+		~Text();
 
 		//Loads image at specified path
-		bool loadFromFile( std::string path );
+		static Uint32 getMaxWidth(std::string textureText);
 
 		//Creates image from font string
-		bool loadFromRenderedText( std::string textureText, SDL_Color textColor );
+		bool loadFromRenderedText(std::string textureText, SDL_Color textColor);
 
 		//Deallocates texture
 		void free();
 
-		//Set color modulation
-		void setColor( Uint8 red, Uint8 green, Uint8 blue );
-
-		//Set blending
-		void setBlendMode( SDL_BlendMode blending );
-
-		//Set alpha modulation
-		void setAlpha( Uint8 alpha );
-
-		//Renders texture at given point
-		void render( int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE );
-
-		void sizeText( std::string textureText );
+		void render(int x, int y);
 
 		//Gets image dimensions
 		int getWidth();
@@ -60,15 +36,16 @@ class LTexture
 
 	private:
 		//The actual hardware texture
-		SDL_Texture* mTexture;
+		SDL_Texture* tTexture;
 
 		//Image dimensions
-		int mWidth;
-		int mHeight;
-
-		//String dimensions
-		int sizeString[TOTAL_DIMENSION];
+		int tWidth;
+		int tHeight;
 };
+
+//Screen dimension constants
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 
 //Starts up SDL and creates window
 bool init();
@@ -89,81 +66,94 @@ SDL_Renderer* gRenderer = NULL;
 TTF_Font *gFont = NULL;
 
 //Rendered texture
-LTexture gTextTexture;
+Text gTextTexture;
 
 
-LTexture::LTexture()
+Text::Text()
 {
 	//Initialize
-	mTexture = NULL;
-	mWidth = 0;
-	mHeight = 0;
+	tTexture = NULL;
+	tWidth = 0;
+	tHeight = 0;
 }
 
-LTexture::~LTexture()
+Text::~Text()
 {
 	//Deallocate
 	free();
 }
 
-bool LTexture::loadFromFile( std::string path )
+Uint32 Text::getMaxWidth(std::string textureText)
+{
+    std::string maxTextLine;
+
+    int maxLengthLine = 0;
+
+    std::string newLine = "\n";
+
+    bool stopFinder = false;
+    std::size_t newLineFinder = 0;
+
+    std::size_t lengthLine = 0;
+    std::size_t exFinder = 0;
+
+    for(std::size_t i = 0; !stopFinder; i+=lengthLine+1)
+    {
+        /** LUNGHEZZA LINEA **/
+        if(newLineFinder == 0)
+            std::size_t exFinder = newLineFinder;
+        else
+            exFinder = newLineFinder + 1;
+
+        newLineFinder = textureText.find(newLine, i);
+
+        stopFinder = (newLineFinder == std::string::npos);
+        if (stopFinder)
+        {
+            newLineFinder = textureText.length();
+        }
+
+        std::cout << "New line found at " << newLineFinder << ".\n";
+
+        lengthLine = newLineFinder - exFinder; //LUNGHEZZA LINEA DI TESTO
+        std::cout << "Actual line is " << lengthLine << ".\n";
+        if (lengthLine > maxLengthLine)
+        {
+            maxLengthLine = lengthLine;
+        }
+
+        /** TESTO LINEA **/
+        char textLine[100]; //PORZIONE DI TESTO DI OGNI LINEA
+        std::size_t lengthTextLine = textureText.copy(textLine, lengthLine, i); //LUNGHEZZA PORZIONE DI TESTO DI OGNI LINEA
+        textLine[lengthTextLine] = '\0'; //CARATTERE TERMINATORE DI STRINGA
+        std::cout << "Text of this line is: '" << textLine << "'.\n\n";
+
+        if(lengthLine > maxTextLine.length())
+        {
+            maxTextLine = textLine;
+        }
+    }
+
+    TTF_SizeText(gFont, maxTextLine.c_str(), &maxLengthLine, NULL); //MASSIMA LUNGHEZZA DI UNA LINEA IN PIXEL
+
+    std::cout << "All new line were been found.\n\n";
+    std::cout << "Text of MAX line is: '" << maxTextLine << "'.\n\n";
+    std::cout << "Total lenght of text: " << textureText.length() << ".\n";
+    std::cout << "Max lenght for line: " << maxLengthLine << ".\n";
+
+    return maxLengthLine;
+}
+
+
+bool Text::loadFromRenderedText(std::string textureText, SDL_Color textColor)
 {
 	//Get rid of preexisting texture
 	free();
 
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	if( loadedSurface == NULL )
-	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
-	}
-	else
-	{
-		//Color key image
-		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
-
-		//Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-		if( newTexture == NULL )
-		{
-			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-		}
-		else
-		{
-			//Get image dimensions
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface( loadedSurface );
-	}
-
-	//Return success
-	mTexture = newTexture;
-	return mTexture != NULL;
-}
-
-void LTexture::sizeText( std::string textureText )
-{
-    TTF_SizeText(gFont, textureText.c_str(), &sizeString[LENGTH_STRING], &sizeString[HEIGHT_STRING] );
-}
-
-bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor )
-{
-	//Get rid of preexisting texture
-	free();
-
-	gTextTexture.sizeText(textureText.c_str());
-
-	Uint32 lengthText = (Uint32)sizeString[LENGTH_STRING];
-	Uint32 heightText = (Uint32)sizeString[HEIGHT_STRING];
+	Uint32 stringLength = getMaxWidth(textureText.c_str());
 
 	//Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped( gFont, textureText.c_str(), textColor, sizeString[LENGTH_STRING]);
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped( gFont, textureText.c_str(), textColor, stringLength);
 	if( textSurface == NULL )
 	{
 		printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -171,16 +161,16 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 	else
 	{
 		//Create texture from surface pixels
-        mTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
-		if( mTexture == NULL )
+        tTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
+		if( tTexture == NULL )
 		{
 			printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
 		}
 		else
 		{
 			//Get image dimensions
-			mWidth = textSurface->w;
-			mHeight = textSurface->h;
+			tWidth = textSurface->w;
+			tHeight = textSurface->h;
 		}
 
 		//Get rid of old surface
@@ -188,63 +178,38 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 	}
 
 	//Return success
-	return mTexture != NULL;
+	return tTexture != NULL;
 }
 
-void LTexture::free()
+void Text::free()
 {
 	//Free texture if it exists
-	if( mTexture != NULL )
+	if( tTexture != NULL )
 	{
-		SDL_DestroyTexture( mTexture );
-		mTexture = NULL;
-		mWidth = 0;
-		mHeight = 0;
+		SDL_DestroyTexture( tTexture );
+		tTexture = NULL;
+		tWidth = 0;
+		tHeight = 0;
 	}
 }
 
-void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
-{
-	//Modulate texture rgb
-	SDL_SetTextureColorMod( mTexture, red, green, blue );
-}
-
-void LTexture::setBlendMode( SDL_BlendMode blending )
-{
-	//Set blending function
-	SDL_SetTextureBlendMode( mTexture, blending );
-}
-
-void LTexture::setAlpha( Uint8 alpha )
-{
-	//Modulate texture alpha
-	SDL_SetTextureAlphaMod( mTexture, alpha );
-}
-
-void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
+void Text::render( int x, int y)
 {
 	//Set rendering space and render to screen
-	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-
-	//Set clip rendering dimensions
-	if( clip != NULL )
-	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
+	SDL_Rect renderQuad = { x, y, tWidth, tHeight };
 
 	//Render to screen
-	SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
+	SDL_RenderCopy(gRenderer, tTexture, NULL, &renderQuad);
 }
 
-int LTexture::getWidth()
+int Text::getWidth()
 {
-	return mWidth;
+	return tWidth;
 }
 
-int LTexture::getHeight()
+int Text::getHeight()
 {
-	return mHeight;
+	return tHeight;
 }
 
 bool init()
@@ -314,7 +279,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Open the font
-	gFont = TTF_OpenFont( "lazy.ttf", 28 );
+	gFont = TTF_OpenFont( "res/lazy.ttf", 28 );
 	if( gFont == NULL )
 	{
 		printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -324,12 +289,20 @@ bool loadMedia()
 	{
 		//Render text
 		SDL_Color textColor = { 0, 0, 0 };
-		Uint32 lengthString = 42;
-		if( !gTextTexture.loadFromRenderedText( "PROVA STRINGA \n Bella giornata, vero?", textColor ) )
-		{
-			printf( "Failed to render text texture!\n" );
-			success = false;
-		}
+
+        if( !gTextTexture.loadFromRenderedText( "PROVA STRINGA\nVisualizzazione di una stringa di testo\nscritta su più righe,\nutlizzando il carattere\nterminatore di stringa,\ngrazie alla libreria SDL_ttf\ned alla libreria string.", textColor ) )
+        {
+            printf( "Failed to render text texture!\n" );
+            success = false;
+        }
+        else
+        {
+            if( gTextTexture.getWidth() > SCREEN_WIDTH )
+            {
+                std::cout << "\nImpossible render text! Text it's greater to the width of the window. \n";
+                success = false;
+            }
+        }
 	}
 
 	return success;
@@ -396,7 +369,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Render current frame
-				gTextTexture.render((SCREEN_WIDTH-gTextTexture.getWidth())/2, (SCREEN_HEIGHT-gTextTexture.getHeight())/2);
+				gTextTexture.render( 0, 0 );
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
