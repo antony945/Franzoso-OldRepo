@@ -53,21 +53,26 @@ Text::~Text()
 Uint32 Text::getMaxWidth(std::string textureText)
 {
     std::string maxTextLine;
+
     int maxLengthLine = 0;
 
     std::string newLine = "\n";
 
     bool stopFinder = false;
+
     std::size_t exFinder = 0;
+
     std::size_t newLineFinder = 0;
 
     std::size_t lengthLine = 0;
+
+    std::size_t newLineFinder = 0;
 
     for(std::size_t i = 0; !stopFinder; i+=lengthLine+1)
     {
         /** LUNGHEZZA LINEA **/
         if(newLineFinder == 0)
-            exFinder = newLineFinder;
+		exFinder = newLineFinder;
         else
             exFinder = newLineFinder + 1;
 
@@ -245,7 +250,11 @@ bool loadMedia()
 	bool success = true;
 
 	//Open the font
+<<<<<<< HEAD
 	gFont = TTF_OpenFont( "../res/AGENCYR.ttf", 28 );
+=======
+	gFont = TTF_OpenFont( "../res/lazy.ttf", 28 );
+>>>>>>> origin/master
 	if( gFont == NULL )
 	{
 		printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
