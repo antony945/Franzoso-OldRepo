@@ -1,6 +1,6 @@
-# TTF - MultiLine v.1.0
+﻿# TTF - MultiLine v.2.0
 
-Questa cartella contiene una prima versione dell'implementazione del rendering di testo a schermo su più linee grazie al carattere '\n', dal momento che questa feature non è supportata nativamente dalle librerie in uso (SDL + librerie base C++).
+Questa cartella contiene una seconda versione dell'implementazione del rendering di testo a schermo su più linee grazie al carattere '\n', dal momento che questa feature non è supportata nativamente dalle librerie in uso (SDL + librerie base C++).
 
 Il metodo consiste semplicemente nel cercare all'interno della stringa inserita la presenza di caratteri terminatori di stringa ('\n') e memorizzare il risulato in variabili le quali scopo è il trovare la riga di testo con lunghezza maggiore, che fornirà la lunghezza della texture contenente il testo.
 ### Esempio pratico
