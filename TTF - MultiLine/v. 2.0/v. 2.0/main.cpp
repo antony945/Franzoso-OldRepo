@@ -1,6 +1,3 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
-and may not be redistributed without written permission.*/
-
 //Using SDL, SDL_image, SDL_ttf, standard IO, math, and strings
 #include <SDL.h>
 #include <SDL_image.h>
@@ -8,7 +5,7 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 #include <iostream>
-#include "../lib/Text.h"
+#include "lib/Text.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -35,13 +32,14 @@ TTF_Font *gFont = NULL;
 //Rendered texture
 Text gTextTexture;
 
-
 Text::Text()
 {
 	//Initialize
 	tTexture = NULL;
 	tWidth = 0;
 	tHeight = 0;
+	lengthLine = 0;
+	textLine = " ";
 }
 
 Text::~Text()
@@ -50,21 +48,17 @@ Text::~Text()
 	free();
 }
 
-std::size_t Text::maxTextForLine(std::string textLine, int text_limit)
+std::size_t Text::maxTextForLine(int text_limit)
 {
     /* This function returns the maximum text that can stay on one line, giving as input a limit beyond which we should wrap the text. */
     int w = 0;
     std::string maxTextForLine;
-    std::cout << "\n\n";
 
         for(std::size_t i = 0; w <= text_limit; i++)
         {
             maxTextForLine.append(textLine, i, 1);
             TTF_SizeText(gFont, maxTextForLine.c_str(), &w, NULL);
-            std::cout << "Width after " << i+1 << " character: " << w << "\n";
         }
-
-    std::cout << "\n\n\nMax Text For Line: " << maxTextForLine << ".\n\n\n";
 
     return maxTextForLine.length();
 }
@@ -74,14 +68,13 @@ Uint32 Text::getMaxWidth(std::string textureText)
     std::string maxTextLine;
     int maxLengthLine = 0;
 
-    std::size_t lengthLine = 0;
-
     std::size_t exFinder = 0;
     std::size_t newLineFinder = 0;
-    std::string newLine = "\n";
-    bool stopFinder = false;
 
-    std::string textLine;
+    std::string newLine("\n");
+    std::string space(" ");
+
+    bool stopFinder = false;
 
     int w_line = 0;
 
@@ -122,17 +115,9 @@ Uint32 Text::getMaxWidth(std::string textureText)
                     }
             }
 
-            std::cout << "New line found at " << newLineFinder << ".\n";
-            std::cout << "Actual line is " << lengthLine << ".\n";
-
             /** TESTO LINEA **/
             textLine.assign(textureText, i, lengthLine);
-            std::cout << "Text of this line is: '" << textLine << "'.\n\n";
             TTF_SizeText(gFont, textLine.c_str(), &w_line, NULL);
-
-            std::cout << "Actual width of text is " << w_line << ".\n\n";
-
-            std::string space(" ");
 
             if(textLine.length() > maxTextLine.length())
             {
@@ -141,12 +126,8 @@ Uint32 Text::getMaxWidth(std::string textureText)
 
             if(w_line > SCREEN_WIDTH)
             {
-                std::size_t pos_last_space_allowed = textLine.find_last_of(space.c_str(), maxTextForLine(textLine, SCREEN_WIDTH)) + exFinder;
-                std::cout << "Position of last space in textureText: " << pos_last_space_allowed << std::endl << std::endl;
-
+                std::size_t pos_last_space_allowed = textLine.find_last_of(space.c_str(), maxTextForLine(SCREEN_WIDTH)) + exFinder;
                 textureText.replace(pos_last_space_allowed, 1, newLine);
-
-                std::cout << "TextureText: \n" << textureText << std::endl << std::endl;
 
                 maxTextLine.clear();
             }
@@ -155,11 +136,6 @@ Uint32 Text::getMaxWidth(std::string textureText)
     }
 
     TTF_SizeText(gFont, maxTextLine.c_str(), &maxLengthLine, NULL); //MASSIMA LUNGHEZZA DI UNA LINEA IN PIXEL
-
-    std::cout << "All new line were been found.\n\n";
-    std::cout << "Text of MAX line is: '" << maxTextLine << "'.\n\n";
-    std::cout << "Total lenght of text: " << textureText.length() << ".\n";
-    std::cout << "Max lenght in pixel for line: " << maxLengthLine << ".\n"; //(MINORE DI SCREEN_WIDTH)
 
     return maxLengthLine;
 }
@@ -299,7 +275,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Open the font
-	gFont = TTF_OpenFont( "../res/font.ttf", 28 );
+	gFont = TTF_OpenFont( "res/font.ttf", 28 );
 	if( gFont == NULL )
 	{
 		printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
