@@ -1,4 +1,4 @@
-# TTF - MultiLine v.2.0
+﻿# TTF - MultiLine v.2.0
 
 Questa cartella contiene una seconda versione dell'implementazione del rendering di testo a schermo su più linee grazie al carattere '\n', dal momento che questa feature non è supportata nativamente dalle librerie in uso (SDL + librerie base C++).
 
@@ -10,8 +10,7 @@ In questa versione è stato implementata una feature mancante nella versione pre
 
 Questa procedura dovrebbe coprire **OGNI** possibile caso di inserimento di testo, in quanto le due feature si possono amalgamare e unire rendendo funzionante il tutto anche nel caso in cui nel testo sia già presente un newLine e, però, una delle due parti in cui si vuole dividere il testo risulti più lunga della finestra.
 
-Provate il programma inserendo vari tentativi e aprite gentilmente una issue nel caso doveste trovare dei problemi, o voleste proporre suggerimenti.
-
+Provate il programma inserendo vari casi di inserimento di testo con e senza '\n', e aprite una issue nel caso doveste trovare dei problemi o proporre suggerimenti, grazie.
 ___
 
 *©antony945*
