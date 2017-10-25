@@ -20,7 +20,7 @@ bool init(){
         cout << "SDL couldn't initialize." << endl << "SDL Error: " << SDL_GetError() << endl;
         success = false;
     }else{
-        myWindow = SDL_CreateWindow("002 Lesson", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        myWindow = SDL_CreateWindow("003 Lesson", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if(myWindow == NULL){
             cout << "Window couldn't be created." << endl << "SDL Error: " << SDL_GetError() << endl;
             success = false;
@@ -34,7 +34,7 @@ bool init(){
 
 bool loadMedia(){
     bool success = true;
-    myImage = SDL_LoadBMP("hello_world.bmp");
+    myImage = SDL_LoadBMP("x.bmp");
 
     if(myImage == NULL){
         cout << "Image couldn't be loaded." << endl << "SDL Error: " << SDL_GetError() << endl;
@@ -61,6 +61,14 @@ int main(int argc, char* argv[]){
         if(!loadMedia()){
             cout << "Media could not be loaded!" << endl;
         }else{
+            bool quit = false;
+            SDL_Event e;
+
+            while(SDL_PollEvent(&e)!=0){
+                if(e.type == SDL_QUIT)
+                    quit = true;
+            }
+
             SDL_BlitSurface(myImage, NULL, myScreenSurface, NULL);
             SDL_UpdateWindowSurface(myWindow);
 

@@ -1,0 +1,4 @@
+http://www.html.it/guide/guida-c2/
+http://www.solira.org/wp-content/uploads/2010/03/cpp2.pdf
+https://okpanico.wordpress.com/2012/05/10/programmazione-c-i-vettori/
+http://www.pd.infn.it/~agarfa/didattica/met_comp/lab_20131023/metcomp2013_lab_oct23.pdf
