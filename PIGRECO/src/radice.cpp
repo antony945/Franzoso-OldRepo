@@ -1,4 +1,5 @@
 #include "../include/radice.h"
+#include <cmath>
 
 Reale proceduraMisteriosa(Reale x, Reale y){
     if(x!=y)//in realtà non dovrebbero essere mai uguali ma il computer non se ne accorge. La condizione corretta sarebbe fabs(x-y) < 1E-<numero grande>
