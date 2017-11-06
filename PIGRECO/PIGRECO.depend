@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1509924333 source:c:\users\antonio\desktop\scuola\matematica\pigreco\main.cpp
+	<iostream>
+	<stdlib.h>
+	<cmath>
+	<iomanip>
+	"include/radice.h"
+
+1509914967 c:\users\antonio\desktop\scuola\matematica\pigreco\include\radice.h
+
+1509923457 source:c:\users\antonio\desktop\scuola\matematica\pigreco\src\radice.cpp
+	"../include/radice.h"
+
