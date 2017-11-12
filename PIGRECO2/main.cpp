@@ -59,48 +59,35 @@ typedef struct Poligono{
     Reale pigreco_nuovo;
     Reale errore;
 }Poligono;
-/*
+
 Reale metodoArchimede(Poligono i, int n_lati){
     i.n = n_lati;
 
-    i.apotema = radq((1.0*1.0)-((i.lato/2.0)*(i.lato/2.0)));
+    i.apotema = radq((1.0Q*1.0Q)-((i.lato/2.0Q)*(i.lato/2.0Q)));
 
     i.perimetro = i.lato*i.n;
     i.pigreco_vecchio = i.pigreco_nuovo;
-    i.pigreco_nuovo = i.perimetro/2.0;
+    i.pigreco_nuovo = i.perimetro/2.0Q;
 
-    i.differenza = 1.0-i.apotema;
-    i.lato = radq(((i.lato/2.0)*(i.lato/2.0))+(i.differenza*i.differenza));
+    i.differenza = 1.0Q-i.apotema;
+    i.lato = radq(((i.lato/2.0Q)*(i.lato/2.0Q))+(i.differenza*i.differenza));
 
     i.errore = fabsq(i.pigreco_vecchio-i.pigreco_nuovo);
 
-    cout << setprecision(25) << fixed;
-    cout << "Il pigreco e': " << i.pigreco_nuovo << endl;
-    cout << "L'errore e':   " << i.errore << endl << endl;
+    cout << "Il pigreco e': " << cifreStampate(i.pigreco_nuovo, 31) << endl;
 
-    if(i.errore < ERR_MAX)
+    if(i.lato/i.n < ERR_MAX)
         return i.pigreco_nuovo;
     else
-        return metodoArchimede(i, 2*i.n);
-}*/
+        return metodoArchimede(i, 2.0Q*i.n);
+}
 
 int main(){
     const int LIMITE_CIFRE = 31;
 
-    for( int n = 0; n<=10; n++){
-      cout << setprecision(25);
-      cout << fixed;
-      cout << "n = " << n
-           << "   rq("<<n<<") = "
-           << cifreStampate(radq(n), LIMITE_CIFRE)
-           << endl;
-    }
+    Poligono inscritto = {6,1.0,0.0,0.0,0.0,0.0,0.0,0.0};
 
-    /*Poligono inscritto = {6,1.0,0.0,0.0,0.0,0.0,0.0,0.0};
-
-    Reale pigreco = metodoArchimede(inscritto, inscritto.n);*/
-
-
+    Reale pigreco = metodoArchimede(inscritto, inscritto.n);
 
     return 0;
 }
