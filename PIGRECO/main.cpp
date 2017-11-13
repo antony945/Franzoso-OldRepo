@@ -3,6 +3,7 @@
 #include <math.h>
 #include <quadmath.h>
 #include <iomanip>
+#include <quadmath.h>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
 #if defined(FLOAT128)
     typedef __float128 Reale;
     #define ERR_MAX 1E-34Q
-    #define LIMITE_CIFRE 25
+    #define LIMITE_CIFRE 18
 #elif defined(LONGDOUBLE)
     typedef long double Reale;
     #define ERR_MAX 1E-19L
@@ -61,7 +62,7 @@ int main(){
     #endif
 
     cout << endl;
-    cout << "Errore = ";
+    cout << "Errore  = ";
 
     #if defined(FLOAT128)
     cout << stampaNumero(inscritto.errore_vecchio, LIMITE_CIFRE);
@@ -77,6 +78,7 @@ int main(){
     return 0;
 }
 
+#if defined(FLOAT128)
 char* stampaNumero(Reale num, int n_cifre){
     int n = quadmath_snprintf(NULL, 0, "%+-#46.*Qe", n_cifre, num);
     if(n>-1){
@@ -91,6 +93,7 @@ char* stampaNumero(Reale num, int n_cifre){
         return "ERRORE! Impossibile stampare il numero __float128 dato.";
     }
 }
+#endif
 
 bool uguali(Reale x, Reale y){
     bool uguali = false;
