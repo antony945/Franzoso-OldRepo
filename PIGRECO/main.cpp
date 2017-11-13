@@ -16,10 +16,6 @@ using namespace std;
     typedef long double Reale;
     #define ERR_MAX 1E-19L
     #define LIMITE_CIFRE 18
-#elif defined(DOUBLE)
-    typedef double Reale;
-    #define ERR_MAX 1E-17L
-    #define LIMITE_CIFRE 16
 #endif
 
 /* STRUCT POLIGONO */
@@ -52,8 +48,6 @@ int main(){
     cout << "'__float128'";
     #elif defined(LONGDOUBLE)
     cout << "'long double'";
-    #elif defined(DOUBLE)
-    cout << "'double'";
     #endif
 
     cout << endl;
@@ -61,7 +55,7 @@ int main(){
 
     #if defined(FLOAT128)
     cout << stampaNumero(pigreco, LIMITE_CIFRE);
-    #elif defined(LONGDOUBLE) || defined(DOUBLE)
+    #elif defined(LONGDOUBLE)
     cout << setprecision(LIMITE_CIFRE) << scientific;
     cout << showpos << pigreco;
     #endif
@@ -71,7 +65,7 @@ int main(){
 
     #if defined(FLOAT128)
     cout << stampaNumero(inscritto.errore_vecchio, LIMITE_CIFRE);
-    #elif defined(LONGDOUBLE) || defined(DOUBLE)
+    #elif defined(LONGDOUBLE)
     cout << setprecision(LIMITE_CIFRE) << scientific;
     cout << showpos << inscritto.errore_vecchio;
     #endif
@@ -107,9 +101,6 @@ bool uguali(Reale x, Reale y){
     #elif defined(LONGDOUBLE)
         if(fabsl(x-y) < ERR_MAX)
             uguali = true;
-    #elif defined(DOUBLE)
-        if(x==y)
-            uguali = true;
     #endif
 
     return uguali;
@@ -123,8 +114,6 @@ Reale proceduraMisteriosa(Reale x, Reale y){
         return proceduraMisteriosa(2.0Q*x*y/(x+y), (x+y)/2.0Q);
         #elif defined(LONGDOUBLE)
         return proceduraMisteriosa(2.0L*x*y/(x+y), (x+y)/2.0L);
-        #elif defined(DOUBLE)
-        return proceduraMisteriosa(2.0*x*y/(x+y), (x+y)/2.0);
         #endif
 }
 
@@ -133,8 +122,6 @@ Reale radq(Reale radicando){
     return proceduraMisteriosa(1.0Q, radicando);
     #elif defined(LONGDOUBLE)
     return proceduraMisteriosa(1.0L, radicando);
-    #elif defined(DOUBLE)
-    return proceduraMisteriosa(1.0, radicando);
     #endif
 }
 
@@ -170,21 +157,5 @@ Reale metodoArchimede(Poligono& poligono, int n_lati){
             return poligono.pigreco_vecchio;
         else
             return metodoArchimede(poligono, 2.0L*poligono.n);
-
-        #elif defined(DOUBLE)
-        poligono.perimetro = poligono.lato*poligono.n;
-        poligono.pigreco_vecchio = poligono.pigreco_nuovo;
-        poligono.pigreco_nuovo = poligono.perimetro/2.0;
-        poligono.errore_vecchio = poligono.errore_nuovo;
-        poligono.errore_nuovo = fabs(poligono.pigreco_vecchio-poligono.pigreco_nuovo);
-
-        poligono.apotema = radq((1.0*1.0)-((poligono.lato/2.0)*(poligono.lato/2.0)));
-        poligono.differenza = 1.0-poligono.apotema;
-        poligono.lato = radq(((poligono.lato/2.0)*(poligono.lato/2.0))+(poligono.differenza*poligono.differenza));
-
-        if((poligono.errore_nuovo>1)&&(poligono.n!=6))
-            return poligono.pigreco_vecchio;
-        else
-            return metodoArchimede(poligono, 2.0*poligono.n);
     #endif
 }
