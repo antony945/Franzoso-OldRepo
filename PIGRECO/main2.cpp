@@ -19,6 +19,10 @@ using namespace std;
     typedef long double Reale;
     #define ERR_MAX 1E-19L
     #define LIMITE_CIFRE 18
+#elif defined(DOUBLE)
+    typedef double Reale;
+    #define ERR_MAX 1E-15
+    #define LIMITE_CIFRE 15
 #endif
 
 /* STRUCT POLIGONO */
@@ -51,6 +55,8 @@ int main(){
     cout << "'__float128'";
     #elif defined(LONGDOUBLE)
     cout << "'long double'";
+    #elif defined(DOUBLE)
+    cout << "'double'";
     #endif
 
     cout << endl;
@@ -58,7 +64,7 @@ int main(){
 
     #if defined(FLOAT128)
     cout << stampaNumero(pigreco, LIMITE_CIFRE);
-    #elif defined(LONGDOUBLE)
+    #elif defined(LONGDOUBLE) || defined(DOUBLE)
     cout << setprecision(LIMITE_CIFRE) << scientific;
     cout << showpos << pigreco;
     #endif
