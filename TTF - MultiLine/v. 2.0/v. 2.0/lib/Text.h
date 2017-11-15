@@ -10,7 +10,6 @@ class Text
 		//Return the max length of line of text, given a limit
 		std::size_t maxTextForLine(int text_limit);
 
-		//Loads image at specified path
 		Uint32 getMaxWidth(std::string textureText);
 
 		bool loadFromRenderedText(std::string textureText, SDL_Color textColor);

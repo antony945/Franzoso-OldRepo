@@ -1,0 +1,10 @@
+Sprite@Cannibali1@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/gatto@10@110@10@100@100
+Sprite@Esagono@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/gatto@10@49@110@100@100@10@10@90@10@100@50@90@90@10@90@0@50
+Sprite@Sfondo@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/sfondo@0@0@350@700@350
+Sprite@Cielo@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/cielo@0@0@0@700@350
+Sprite@Ottagono@C:/Users/Riccardo-PC/Desktop/110APPLE@10@500@400@100@100@10@10@50@-5@90@10@100@50@90@90@50@105@10@90@0@50
+Sprite@Mezza Luna@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/gatto@10@250@450@100@100@0@0@30@-30@60@-40@90@-40@120@-30@150@0@120@-10@90@-20@60@-20@30@-10
+Sprite@Cannibali5@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/gatto@10@500@250@100@100
+Sprite@Cannibali6@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/gatto@10@600@300@100@100
+Sprite@Cannibali7@C:/Users/Riccardo-PC/Documents/Visual Studio 2015/Projects/SDL/Resurces/gatto@10@230@400@100@100
+Light@00@10@1@1@300@200@255@255@153
