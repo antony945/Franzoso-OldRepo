@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>TMSimulator 1.2</title>
+</head>
+<body bgcolor="#004F8A">
+<center>
+<applet name="TMApplet" code="it.unipi.di.tm.TuringUI.TMApplet" width="950" height="570">
+  <!-- Applet configuration -->
+
+  <!-- Basic options -->
+  <param name="Login" value="no">    <!-- Use yes to enable login support -->
+  <param name="Save" value="no">     <!-- use yes to enable save support  -->
+  <param name="Load" value="yes">     <!-- use yes to enable load support  -->
+  <param name="User" value="Antonio"> <!-- If no login it is used for save -->
+  <param name="Password" value="Cisternino"> <!-- Password if no login -->
+
+  <!-- Refresh speed in milliseconds used for a complete animation cycle -->
+  <param name="MinSpeed" value="2500">
+  <param name="MaxSpeed" value="100">
+
+  <!-- Used if save is disabled to load files -->
+  <param name="ProgramsDir" value="progs">
+
+  <param name="program0" value="hello.t:Hello world">
+  <param name="program1" value="abexch.t:Exchange A and B">
+  <param name="program2" value="anbn.t:A^nB^n">
+  <param name="program3" value="universal.t:Universal Turing Machine">
+
+  <!-- Definition of the TM -->
+  <param name="bg" value="img/bg.jpg">
+
+  <!-- 
+    Use this to move the chars; it is a pixel value and zero means
+    that chars are stopped.
+   -->
+  <param name="CharDelta" value="5">
+
+  <!-- Left and Right area to move the tape -->
+  <param name="MoveLeftArea" value="78, 326, 64, 64">
+  <param name="MoveRightArea" value="587, 329, 64, 64">
+
+  <!-- 
+    Machine descriptor, the number of frames must be 1 or the same
+    number provided for the TapeFramesNo parameter
+  -->
+  <param name="machine" value="img/Machine.gif">
+  <param name="MachinePos" value="268, 136">
+  <param name="MachineFramesNo" value="1">
+
+  <param name="statecell0" value="293, 159, 100, 85">
+
+  <param name="tape" value="img/Tape.gif">
+  <param name="TapeFramesNo" value="3">
+  <param name="TapePos" value="0, 314">
+  <param name="cells" value="31">
+
+  <param name="cell0" value="156, 345, 11, 26">
+  <param name="cell1" value="167, 344, 12, 29">
+  <param name="cell2" value="179, 342, 13, 31">
+  <param name="cell3" value="192, 342, 14, 32">
+  <param name="cell4" value="206, 342, 14, 31">
+  <param name="cell5" value="218, 342, 14, 31">
+  <param name="cell6" value="230, 341, 14, 32">
+  <param name="cell7" value="243, 341, 14, 32">
+  <param name="cell8" value="257, 340, 15, 33">
+  <param name="cell9" value="271, 340, 15, 33">
+  <param name="cell10" value="286, 339, 16, 33">
+  <param name="cell11" value="301, 339, 16, 32">
+  <param name="cell12" value="316, 338, 15, 33">
+  <param name="cell13" value="331, 338, 14, 33">
+  <param name="cell14" value="344, 337, 16, 33">
+  <param name="cell15" value="359, 337, 15, 32">
+  <param name="cell16" value="373, 336, 15, 33">
+  <param name="cell17" value="387, 336, 15, 33">
+  <param name="cell18" value="401, 336, 15, 32">
+  <param name="cell19" value="415, 336, 16, 32">
+  <param name="cell20" value="430, 336, 17, 31">
+  <param name="cell21" value="446, 336, 17, 31">
+  <param name="cell22" value="462, 336, 15, 31">
+  <param name="cell23" value="476, 336, 16, 30">
+  <param name="cell24" value="491, 335, 15, 31">
+  <param name="cell25" value="505, 335, 13, 31">
+  <param name="cell26" value="517, 334, 14, 31">
+  <param name="cell27" value="530, 334, 15, 31">
+  <param name="cell28" value="544, 333, 15, 32">
+  <param name="cell29" value="557, 334, 16, 32">
+  <param name="cell30" value="573, 335, 16, 31">
+</applet>
+</center>
+</body>
+</html>

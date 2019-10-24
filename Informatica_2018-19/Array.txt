@@ -1,0 +1,36 @@
+ARRAY --> Contenitore di n dati per lavorare velocemente con tanti dati dello stesso tipo
+
+DIMENSIONE --> Una: Array monodimensionale (vettore vero e proprio)
+	       Due: Array bidimensionali (matrici)
+	       Tre: Array tridimensionali (spigoli di un cubo)
+	       ...
+
+COME UTILIZZARLI
+Per lavorare con gli array monodimensionali si sfrutta un ciclo che controlla tutte le posizioni.
+Per i bidimensionali servono due cicli, uno per le righe e uno per le colonne.
+Inserimento, lettura, ricerca, ordinamento, eliminazione (lasciando il posto vuoto o scalando gli elementi successivi) dati.
+
+Per il computer l'array è una parte di RAM, se non utilizzo tutti i punti del vettore ci sono dei dati passati che rimangono li.
+
+ARRAY
+tipo NOME[dimensione];
+int vett[5];
+
+MATRICE
+tipo NOME[dimensione righe][dimensione colonne];
+int vett[5][3];
+
+Per inizializzare:
+int vett[5][3] = {7, 1, 4, 0, 3}
+
+Per lavorare con ciclo:
+ARRAY
+for(int i=0;i<5;i++){
+}
+
+MATRICE
+for(int i=0;i<5;i++){
+	for(int j=0;j<3;j++){
+	}
+}
+

@@ -1,0 +1,137 @@
+package it.unipi.di.tm.TuringUI;
+
+import it.unipi.di.tm.TM;
+import it.unipi.di.tm.TMParser;
+import it.unipi.di.tm.TMParserException;
+import it.unipi.di.tm.TMListener;
+
+import java.util.StringTokenizer;
+import java.io.LineNumberReader;
+import java.io.Reader;
+
+/**
+ * Parser.java
+ *
+ *
+ * Created: Thu Dec 23 21:24:05 1999
+ *
+ * @author Antonio Cisternino
+ * @version 0.1
+ */
+
+public class Parser implements TMParser {
+  private String remark = "#";
+  private char   blank = '-';
+  private String dirLeft = "<";
+  private String dirRight = ">";
+  private String dirNone = "-";
+
+  private boolean ignoreCase = true;
+
+  /**
+   * Invoke the parsing routine. If you want to use a string
+   * as source you can use the StringInputReader.
+   * @param t The Turing Machine to store the program
+   * @param in The input stream
+   * @exception TMParserException It is raised if a syntax error is
+   *            detected.
+   */
+  public void parse(TM t, Reader in) throws TMParserException {
+    LineNumberReader buf = new LineNumberReader(in);
+    String line;
+
+    try {
+      while ((line = buf.readLine()) != null) {
+        String startState, startSymbol;
+        String destState, destSymbol, destMove;
+
+        if (ignoreCase)
+          line = line.toUpperCase();
+
+        if (line.startsWith(remark))
+          continue;
+
+        StringTokenizer st = new StringTokenizer(line, "(),");
+
+        if (!st.hasMoreTokens())
+          continue;
+
+        startState = st.nextToken().trim();
+
+        // Spaces before '(' found!
+        if (startState.equals(""))
+          startState = st.nextToken().trim();
+
+        if (!st.hasMoreTokens())
+          throw new TMParserException(MsgMgr.MISSING_START_SYMBOL, 
+                                      buf.getLineNumber());
+
+        startSymbol = st.nextToken().trim();
+
+        if ("".equals(startSymbol))
+          throw new TMParserException(MsgMgr.MISSING_START_SYMBOL, 
+                                      buf.getLineNumber());
+
+        if (startSymbol.indexOf(" ") != -1)
+          throw new TMParserException(MsgMgr.INVALID_START_SYMBOL,
+                                      buf.getLineNumber());
+
+        if (!st.hasMoreTokens())
+          throw new TMParserException(MsgMgr.MISSING_DEST_STATE,
+                                      buf.getLineNumber());
+
+        destState = st.nextToken().trim();
+
+        if (!st.hasMoreTokens())
+          throw new TMParserException(MsgMgr.MISSING_DEST_SYMBOL,
+                                      buf.getLineNumber());
+
+        destSymbol = st.nextToken().trim();
+
+        if ("".equals(destSymbol))
+          throw new TMParserException(MsgMgr.MISSING_DEST_SYMBOL,
+                                      buf.getLineNumber());
+
+        if ((destSymbol.length() != startSymbol.length()) || 
+            (startSymbol.indexOf(" ") != -1))
+          throw new TMParserException(MsgMgr.INVALID_DEST_SYMBOL,
+                                      buf.getLineNumber());
+
+        if (!st.hasMoreTokens())
+          throw new TMParserException(MsgMgr.MISSING_DEST_MOVE,
+                                      buf.getLineNumber());
+
+        destMove = st.nextToken().trim();
+
+        if (!destMove.equals(dirLeft) &&
+            !destMove.equals(dirRight) &&
+            !destMove.equals(dirNone))
+          throw new TMParserException(MsgMgr.INVALID_DEST_MOVE,
+                                      buf.getLineNumber());
+
+        if (st.hasMoreTokens() && !st.nextToken().trim().equals(""))
+          throw new TMParserException(MsgMgr.TOO_MUCH_DATA,
+                                      buf.getLineNumber());
+        
+        Integer lineno = new Integer(buf.getLineNumber());
+
+        for (int i = 0; i < startSymbol.length(); i++)
+          t.addRule(startState, 
+                    (startSymbol.charAt(i) == blank)?TM.BLANK:startSymbol.charAt(i),
+                    destState,
+                    (destSymbol.charAt(i) == blank)?TM.BLANK:destSymbol.charAt(i),
+                    (destMove.equals(dirLeft))?TM.LEFT:
+                    (destMove.equals(dirRight))?TM.RIGHT:
+                    TM.STAY,
+                    lineno);
+      }
+    } catch(java.io.IOException e) {
+      throw new TMParserException(MsgMgr.IO_ERROR, buf.getLineNumber());
+    }
+  }
+  
+  public Parser() {
+    
+  }
+  
+} // Parser
